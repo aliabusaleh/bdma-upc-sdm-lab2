@@ -81,14 +81,6 @@ public class Exercise_4 {
 			Dataset<Row> top10Vertices = results.vertices().orderBy(org.apache.spark.sql.functions.desc("pagerank")).limit(10);
 			top10Vertices.show();
 
-			// Inspect convergence information
-//			Dataset<Row> convergenceInfo = results.vertices().select("id", "pagerank", "prev", "diff");
-//			convergenceInfo.show();
-//
-//			// Find the iteration where the algorithm converged
-//			long convergenceIteration = convergenceInfo.filter("diff < 0.0001").agg(org.apache.spark.sql.functions.min("prev")).head().getLong(0);
-//			System.out.println("Algorithm converged at iteration " + convergenceIteration);
-
 			System.out.println("Finish");
 		} catch (FileNotFoundException e) {
 			throw new RuntimeException(e);
