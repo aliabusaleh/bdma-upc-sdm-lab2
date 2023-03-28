@@ -33,7 +33,7 @@ public class Exercise_4 {
 			String line = reader.readLine();
 			java.util.List<Row> vertices_list = new ArrayList<Row>();
 			while (line != null) {
-				vertices_list.add(RowFactory.create(line.split("\t")[0], line.split("\t")[1]));
+				vertices_list.add(RowFactory.create(Long.valueOf(line.split("\t")[0]), line.split("\t")[1]));
 //				System.out.println(line);
 				// read next line
 				line = reader.readLine();
@@ -43,7 +43,7 @@ public class Exercise_4 {
 			JavaRDD<Row> vertices_rdd = ctx.parallelize(vertices_list);
 			// add vertices schema
 			StructType vertices_schema = new StructType(new StructField[]{
-					new StructField("id", DataTypes.StringType, true, new MetadataBuilder().build()),
+					new StructField("id", DataTypes.LongType, true, new MetadataBuilder().build()),
 					new StructField("title", DataTypes.StringType, true, new MetadataBuilder().build())
 			});
 			// create vertices
@@ -54,7 +54,7 @@ public class Exercise_4 {
 			reader = new BufferedReader(new FileReader("src/main/resources/wiki-edges.txt"));
 			line = reader.readLine();
 			while (line != null) {
-				edges_list.add(RowFactory.create(line.split("\t")[0], line.split("\t")[1]));
+				edges_list.add(RowFactory.create(Long.valueOf(line.split("\t")[0]), Long.valueOf(line.split("\t")[1])));
 				// read next line
 				line = reader.readLine();
 			}
@@ -63,18 +63,18 @@ public class Exercise_4 {
 			JavaRDD<Row> edges_rdd = ctx.parallelize(edges_list);
 
 			StructType edges_schema = new StructType(new StructField[]{
-					new StructField("src", DataTypes.StringType, true, new MetadataBuilder().build()),
-					new StructField("dst", DataTypes.StringType, true, new MetadataBuilder().build())
+					new StructField("src", DataTypes.LongType, true, new MetadataBuilder().build()),
+					new StructField("dst", DataTypes.LongType, true, new MetadataBuilder().build())
 			});
 
 			Dataset<Row> edges = sqlCtx.createDataFrame(edges_rdd, edges_schema);
 
 			GraphFrame gf = GraphFrame.apply(vertices,edges);
 
-			System.out.println(gf);
-
-			gf.edges().show();
-			gf.vertices().show();
+//			System.out.println(gf);
+//
+//			gf.edges().show();
+//			gf.vertices().show();
 
 			// pageRank calculation
 			GraphFrame results = gf.pageRank().resetProbability(0.5).maxIter(3).run();
