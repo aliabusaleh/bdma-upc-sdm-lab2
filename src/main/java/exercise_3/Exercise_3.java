@@ -36,7 +36,7 @@ public class Exercise_3 {
             if (message.equals(new PathTup(Integer.MAX_VALUE))) {             // superstep 0
                 return vertexValue;
             } else {                                        // superstep > 0
-                System.out.println("vertexId"+vertexID+" vertexValue "+vertexValue+" message "+message);
+//                System.out.println("vertexId"+vertexID+" vertexValue "+vertexValue+" message "+message);
                 if (vertexValue._1 >= message._1) {
                     return message;
                 }
