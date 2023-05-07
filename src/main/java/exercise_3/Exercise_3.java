@@ -57,7 +57,7 @@ public class Exercise_3 {
             PathTup inputVertex = triplet.srcAttr();
 
             // the node not accessed yet by A, so no message could be sent
-            if (inputVertex.equals(new PathTup(Integer.MAX_VALUE))) {
+            if (inputVertex.equals(new PathTup(Integer.MAX_VALUE)) || triplet.dstAttr() <= inputVertex) {
                 return JavaConverters.asScalaIteratorConverter(new ArrayList<Tuple2<Object,PathTup>>().iterator()).asScala();
             }
             else {

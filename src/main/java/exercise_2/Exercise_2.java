@@ -41,14 +41,13 @@ public class Exercise_2 {
             Tuple2<Object,Integer> dstVertex = triplet.toTuple()._2();
             Integer edge_value = triplet.toTuple()._3();
 
-
             if (sourceVertex._2 == 0) {   // source vertex value zero --> A --> send messages
                 // send the new value
                 return JavaConverters.asScalaIteratorConverter(Arrays.asList(new Tuple2<Object,Integer>(triplet.dstId(), edge_value)).iterator()).asScala();
 
             } else {
                 //
-                if (sourceVertex._2 == Integer.MAX_VALUE) {
+                if (sourceVertex._2 == Integer.MAX_VALUE || dstVertex._2 <= sourceVertex._2) {
                     return JavaConverters.asScalaIteratorConverter(new ArrayList<Tuple2<Object,Integer>>().iterator()).asScala();
                 }
                 else {
